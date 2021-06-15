@@ -76,21 +76,22 @@ function update(i, field, value) {
 }
 function sort() {
     var data = loadData();
-    
-    for(i=0;i<data.length;i++){
-        for(j=0;j<data.length-1-i;j++){
-            if(compare(j,j+1,data)==j+1){
+    if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+            for (j = 0; j < data.length - 1 - i; j++) {
+                if (compare(j, j + 1, data) == j + 1) {
 
-                var temp=data[j];
-                data[j]=data[j+1];
-                data[j+1]=temp;
+                    var temp = data[j];
+                    data[j] = data[j + 1];
+                    data[j + 1] = temp;
+                }
             }
         }
+        saveData(data);
     }
-    saveData(data);
 
 }
-function compare(i, j,data) {
+function compare(i, j, data) {
     if (data[j].date.substring(0, 4) == '----')
         return i;
     else if (data[i].date.substring(0, 4) == '----')
@@ -147,43 +148,43 @@ function edit(i) {
         }
     };
 }
-function getCurrTime(){
-    var t=new Date();
-    var year=t.getFullYear();
-    var month=t.getMonth();
-    var day=t.getDate();
-    var hour=t.getHours();
-    var minute=t.getMinutes();
-    var currTime={"year":year,"month":month+1,"day":day,"hour":hour,"minute":minute};
+function getCurrTime() {
+    var t = new Date();
+    var year = t.getFullYear();
+    var month = t.getMonth();
+    var day = t.getDate();
+    var hour = t.getHours();
+    var minute = t.getMinutes();
+    var currTime = { "year": year, "month": month + 1, "day": day, "hour": hour, "minute": minute };
     return currTime;
 }
-function calculateTime(i){
-    var data=loadData();
-    var currTime=getCurrTime();
-    if(data[i].date.substring(0,4)=='----')
-        return ;
-    if(parseInt(data[i].date.substring(0,4))<currTime.year)
+function calculateTime(i) {
+    var data = loadData();
+    var currTime = getCurrTime();
+    if (data[i].date.substring(0, 4) == '----')
+        return;
+    if (parseInt(data[i].date.substring(0, 4)) < currTime.year)
         return 'border-left: 10px solid #707075;'
-    if(parseInt(data[i].date.substring(0,4))>currTime.year)
+    if (parseInt(data[i].date.substring(0, 4)) > currTime.year)
         return 'border-left: 10px solid #eab700;'
-    if(parseInt(data[i].date.substring(5,7))<currTime.month)
+    if (parseInt(data[i].date.substring(5, 7)) < currTime.month)
         return 'border-left: 10px solid #707075;'
-    if(parseInt(data[i].date.substring(5,7))>currTime.month)
+    if (parseInt(data[i].date.substring(5, 7)) > currTime.month)
         return 'border-left: 10px solid #eab700;'
-    if(parseInt(data[i].date.substring(8,10))<currTime.day)
+    if (parseInt(data[i].date.substring(8, 10)) < currTime.day)
         return 'border-left: 10px solid #707075;'
-    if(parseInt(data[i].date.substring(8,10))>currTime.day)
+    if (parseInt(data[i].date.substring(8, 10)) > currTime.day)
         return 'border-left: 10px solid #ea8000;'
-    if(parseInt(data[i].time.substring(0, 2))<currTime.hour)
+    if (parseInt(data[i].time.substring(0, 2)) < currTime.hour)
         return 'border-left: 10px solid #707075;'
-    if(parseInt(data[i].time.substring(0, 2))>currTime.hour)
+    if (parseInt(data[i].time.substring(0, 2)) > currTime.hour)
         return 'border-left: 10px solid #fb372c;'
-    if(parseInt(data[i].time.substring(3, 5))<currTime.minute)
+    if (parseInt(data[i].time.substring(3, 5)) < currTime.minute)
         return 'border-left: 10px solid #707075;'
     return 'border-left: 10px solid #fb372c;'
-    
-    
-    
+
+
+
 }
 
 function load() {
@@ -203,10 +204,10 @@ function load() {
     if (collection != null) {
         var data = JSON.parse(collection);
 
-        for (var i = 0; i <data.length; i++) {
+        for (var i = 0; i < data.length; i++) {
             if (data[i].repeat) {
                 if (!data[i].done) {
-                    repeatString += "<li draggable='true' style='"+calculateTime(i)+"' ><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",true)' />" +
+                    repeatString += "<li draggable='true' style='" + calculateTime(i) + "' ><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",true)' />" +
                         "<p id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].title + "</p>" +
                         "<div class='Date' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].date + "</div>" +
                         "<div class='Time' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].time + "</div>" +
@@ -232,7 +233,7 @@ function load() {
                         "<input class='delete' type='image' src='./delete.svg' onclick=remove(" + i + ")>";
                     doneCount++;
                 } else {
-                    todoString += "<li draggable='true' style='"+calculateTime(i)+"'><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",true)' />" +
+                    todoString += "<li draggable='true' style='" + calculateTime(i) + "'><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",true)' />" +
                         "<p id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].title + "</p>" +
                         "<div class='Date' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].date + "</div>" +
                         "<div class='Time' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].time + "</div>" +
