@@ -163,24 +163,24 @@ function calculateTime(i){
     if(data[i].date.substring(0,4)=='----')
         return ;
     if(parseInt(data[i].date.substring(0,4))<currTime.year)
-        return 'background-color:grey;'
+        return 'border-left: 10px solid #707075;'
     if(parseInt(data[i].date.substring(0,4))>currTime.year)
-        return 'background-color:#e48585;'
+        return 'border-left: 10px solid #eab700;'
     if(parseInt(data[i].date.substring(5,7))<currTime.month)
-        return 'background-color:grey;'
+        return 'border-left: 10px solid #707075;'
     if(parseInt(data[i].date.substring(5,7))>currTime.month)
-        return 'background-color:#e48585;'
+        return 'border-left: 10px solid #eab700;'
     if(parseInt(data[i].date.substring(8,10))<currTime.day)
-        return 'background-color:grey;'
+        return 'border-left: 10px solid #707075;'
     if(parseInt(data[i].date.substring(8,10))>currTime.day)
-        return 'background-color:#df4242;'
+        return 'border-left: 10px solid #ea8000;'
     if(parseInt(data[i].time.substring(0, 2))<currTime.hour)
-        return 'background-color:grey;'
+        return 'border-left: 10px solid #707075;'
     if(parseInt(data[i].time.substring(0, 2))>currTime.hour)
-        return 'background-color:red;'
+        return 'border-left: 10px solid #fb372c;'
     if(parseInt(data[i].time.substring(3, 5))<currTime.minute)
-        return 'background-color:grey;'
-    return 'background-color:red;'
+        return 'border-left: 10px solid #707075;'
+    return 'border-left: 10px solid #fb372c;'
     
     
     
