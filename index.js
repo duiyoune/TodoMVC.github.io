@@ -89,65 +89,65 @@ function setLastCheckTime(i) {
     saveData(data);
 }
 //对list进行排序
-function sort() {
-    var data = loadData();
-    if (data.length > 0) {
-        for (i = 0; i < data.length; i++) {
-            for (j = 0; j < data.length - 1 - i; j++) {
-                if (compare(j, j + 1, data) == j + 1) {
+// function sort() {
+//     var data = loadData();
+//     if (data.length > 0) {
+//         for (i = 0; i < data.length; i++) {
+//             for (j = 0; j < data.length - 1 - i; j++) {
+//                 if (compare(j, j + 1, data) == j + 1) {
 
-                    var temp = data[j];
-                    data[j] = data[j + 1];
-                    data[j + 1] = temp;
-                }
-            }
-        }
-        saveData(data);
-    }
+//                     var temp = data[j];
+//                     data[j] = data[j + 1];
+//                     data[j + 1] = temp;
+//                 }
+//             }
+//         }
+//         saveData(data);
+//     }
 
-}
+// }
 //比较list时间先后顺序
-function compare(i, j, data) {
-    if (data == [])
-        return i;
-    if (data[j].date.substring(0, 4) == '----')
-        return i;
-    else if (data[i].date.substring(0, 4) == '----')
-        return j;
-    else {
-        if (parseInt(data[i].date.substring(0, 4)) < parseInt(data[j].date.substring(0, 4)))
-            return i;
-        else if (parseInt(data[i].date.substring(0, 4)) > parseInt(data[j].date.substring(0, 4)))
-            return j;
-        else {
-            if (parseInt(data[i].date.substring(5, 7)) < parseInt(data[j].date.substring(5, 7)))
-                return i;
-            else if (parseInt(data[i].date.substring(5, 7)) > parseInt(data[j].date.substring(5, 7)))
-                return j;
-            else {
-                if (parseInt(data[i].date.substring(8, 10)) < parseInt(data[j].date.substring(8, 10)))
-                    return i;
-                else if (parseInt(data[i].date.substring(8, 10)) > parseInt(data[j].date.substring(8, 10)))
-                    return j;
-                else {
-                    if (parseInt(data[i].time.substring(0, 2)) < parseInt(data[j].time.substring(0, 2)))
-                        return i;
-                    else if (parseInt(data[i].time.substring(0, 2)) > parseInt(data[j].time.substring(0, 2)))
-                        return j;
-                    else {
-                        if (parseInt(data[i].time.substring(3, 5)) < parseInt(data[j].time.substring(3, 5)))
-                            return i;
-                        else if (parseInt(data[i].time.substring(3, 5)) > parseInt(data[j].time.substring(3, 5)))
-                            return j;
-                        else
-                            return i;
-                    }
-                }
-            }
-        }
-    }
+// function compare(i, j, data) {
+//     if (data == [])
+//         return i;
+//     if (data[j].date.substring(0, 4) == '----')
+//         return i;
+//     else if (data[i].date.substring(0, 4) == '----')
+//         return j;
+//     else {
+//         if (parseInt(data[i].date.substring(0, 4)) < parseInt(data[j].date.substring(0, 4)))
+//             return i;
+//         else if (parseInt(data[i].date.substring(0, 4)) > parseInt(data[j].date.substring(0, 4)))
+//             return j;
+//         else {
+//             if (parseInt(data[i].date.substring(5, 7)) < parseInt(data[j].date.substring(5, 7)))
+//                 return i;
+//             else if (parseInt(data[i].date.substring(5, 7)) > parseInt(data[j].date.substring(5, 7)))
+//                 return j;
+//             else {
+//                 if (parseInt(data[i].date.substring(8, 10)) < parseInt(data[j].date.substring(8, 10)))
+//                     return i;
+//                 else if (parseInt(data[i].date.substring(8, 10)) > parseInt(data[j].date.substring(8, 10)))
+//                     return j;
+//                 else {
+//                     if (parseInt(data[i].time.substring(0, 2)) < parseInt(data[j].time.substring(0, 2)))
+//                         return i;
+//                     else if (parseInt(data[i].time.substring(0, 2)) > parseInt(data[j].time.substring(0, 2)))
+//                         return j;
+//                     else {
+//                         if (parseInt(data[i].time.substring(3, 5)) < parseInt(data[j].time.substring(3, 5)))
+//                             return i;
+//                         else if (parseInt(data[i].time.substring(3, 5)) > parseInt(data[j].time.substring(3, 5)))
+//                             return j;
+//                         else
+//                             return i;
+//                     }
+//                 }
+//             }
+//         }
+//     }
 
-}
+// }
 //编辑某一项todolist
 function edit(i) {
     load();
@@ -208,7 +208,7 @@ function calculateTime(i) {
 }
 //通过数据加载界面
 function load() {
-    sort();
+    // sort();
     var todolist = document.getElementById("todolist");
     var donelist = document.getElementById("donelist");
     var repeatlist = document.getElementById("repeatlist");
