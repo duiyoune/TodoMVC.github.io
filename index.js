@@ -23,6 +23,7 @@ function postaction() {
         load();
     }
 }
+    
 
 function loadData() {
     var collection = localStorage.getItem("todo");
@@ -57,6 +58,7 @@ function saveSort() {
 
 function saveData(data) {
     localStorage.setItem("todo", JSON.stringify(data));
+    
 }
 
 function remove(i) {
@@ -207,7 +209,7 @@ function load() {
         for (var i = 0; i < data.length; i++) {
             if (data[i].repeat) {
                 if (!data[i].done) {
-                    repeatString += "<li draggable='true' style='" + calculateTime(i) + "' ><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",true)' />" +
+                    repeatString += "<li name='list' draggable='true' style='" + calculateTime(i) + "' ><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",true)' />" +
                         "<p id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].title + "</p>" +
                         "<div class='Date' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].date + "</div>" +
                         "<div class='Time' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].time + "</div>" +
@@ -215,7 +217,7 @@ function load() {
                         "<input class='delete' type='image' src='./delete.svg' onclick=remove(" + i + ")>";
                     repeatCount++;
                 } else {
-                    repeatDoneString += "<li draggable='true'><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",false)' checked='checked' />" +
+                    repeatDoneString += "<li name='list' draggable='true'><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",false)' checked='checked' />" +
                         "<p id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].title + "</p>" +
                         "<div class='Date' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].date + "</div>" +
                         "<div class='Time' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].time + "</div>" +
@@ -225,7 +227,7 @@ function load() {
                 }
             } else {
                 if (data[i].done) {
-                    doneString += "<li draggable='true'><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",false)' checked='checked' />" +
+                    doneString += "<li name='list' draggable='true'><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",false)' checked='checked' />" +
                         "<p id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].title + "</p>" +
                         "<div class='Date' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].date + "</div>" +
                         "<div class='Time' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].time + "</div>" +
@@ -233,7 +235,7 @@ function load() {
                         "<input class='delete' type='image' src='./delete.svg' onclick=remove(" + i + ")>";
                     doneCount++;
                 } else {
-                    todoString += "<li draggable='true' style='" + calculateTime(i) + "'><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",true)' />" +
+                    todoString += "<li name='list' draggable='true' style='" + calculateTime(i) + "'><input type='checkbox' class='checkbox' onchange='update(" + i + ",\"done\",true)' />" +
                         "<p id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].title + "</p>" +
                         "<div class='Date' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].date + "</div>" +
                         "<div class='Time' id='p-" + i + "' onclick='edit(" + i + ")'>" + data[i].time + "</div>" +
@@ -251,7 +253,7 @@ function load() {
         todolist.innerHTML = todoString;
         donecount.innerHTML = doneCount;
         donelist.innerHTML = doneString;
-        repeatCount.innerHTML = repeatCount;
+        repeatcount.innerHTML = repeatCount;
         repeatlist.innerHTML = repeatString;
         repeatdonelist.innerHTML = repeatDoneString;
     } else {
@@ -259,7 +261,7 @@ function load() {
         todolist.innerHTML = "";
         donecount.innerHTML = 0;
         donelist.innerHTML = "";
-        repeatCount.innerHTML = 0;
+        repeatcount.innerHTML = 0;
         repeatlist.innerHTML = "";
         repeatdonelist.innerHTML = "";
     }
@@ -284,8 +286,60 @@ function allUnfinish() {
     load();
 }
 
+function addListener() {
+    var obj = document.querySelectorAll("li");
+    var deviceWidth = window.innerWidth; 
+    var isDelete=false;
+    var flag=0;
+
+    for (i = 0; i < obj.length; i++) {
+        
+
+        var p=i;
+        var startX,startY;
+        obj[i].addEventListener('touchstart', function (ev) {
+            // ev.preventDefault();
+            
+            startX = ev.touches[0].pageX;
+            startY = ev.touches[0].pageY;
+        }, false);
+        obj[i].addEventListener('touchmove', function (ev) {
+            ev.preventDefault();
+            var endX, endY;
+            endX = ev.changedTouches[0].pageX;
+            endY = ev.changedTouches[0].pageY;
+            // var direction = GetSlideDirection(startX, startY, endX, endY);
+            if (endX - startX < -deviceWidth/3) {
+                var data=loadData();
+                var datum={"title":this.querySelector("p").firstChild.data,"date":this.querySelectorAll("div")[0].firstChild.data,"time":this.querySelectorAll("div")[1].firstChild.data};
+                for(j=0;j<data.length;j++){
+                    if(data[j].title==datum.title && data[j].date==datum.date && data[j].time==datum.time){
+                        console.log(data[j]);
+                        console.log(datum);
+                        isDelete=true;
+                        flag=j;
+                    }
 
 
-window.onload = load;
+                }
+            }
+        }, false);
+        obj[i].addEventListener('touchend', function (event) {
+            /* 在DOM中和Model中删除该todo */
+            if (isDelete && this != null) {
+                remove(flag);
+            }
+        }, false);
+    }
+}
+
+
+window.onload = function () {
+    load();
+    addListener();
+}
+
+
+
 
   // window.addEventListener("storage", load, false);
