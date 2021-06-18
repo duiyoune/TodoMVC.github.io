@@ -1,5 +1,5 @@
 
-// 获取title节点
+// 获取list节点
 function post() {
 
     var title = document.getElementById("title");
@@ -73,7 +73,7 @@ function remove(i) {
     saveData(data);
     load();
 }
-
+//更新list中某一项
 function update(i, field, value) {
     var data = loadData();
     var todo = data.splice(i, 1)[0];
@@ -83,71 +83,72 @@ function update(i, field, value) {
     load();
     setLastCheckTime(i);
 }
+//设置上一次打勾时间
 function setLastCheckTime(i) {
     var data = loadData();
     data[i].lastchecktime = getCurrTime().year.toString() + '-' + getCurrTime().month.toString() + '-' + getCurrTime().day.toString();
     saveData(data);
 }
-//对list进行排序
-// function sort() {
-//     var data = loadData();
-//     if (data.length > 0) {
-//         for (i = 0; i < data.length; i++) {
-//             for (j = 0; j < data.length - 1 - i; j++) {
-//                 if (compare(j, j + 1, data) == j + 1) {
+// 对list进行排序
+function sort() {
+    var data = loadData();
+    if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+            for (j = 0; j < data.length - 1 - i; j++) {
+                if (compare(j, j + 1, data) == j + 1) {
 
-//                     var temp = data[j];
-//                     data[j] = data[j + 1];
-//                     data[j + 1] = temp;
-//                 }
-//             }
-//         }
-//         saveData(data);
-//     }
+                    var temp = data[j];
+                    data[j] = data[j + 1];
+                    data[j + 1] = temp;
+                }
+            }
+        }
+        saveData(data);
+    }
 
-// }
-//比较list时间先后顺序
-// function compare(i, j, data) {
-//     if (data == [])
-//         return i;
-//     if (data[j].date.substring(0, 4) == '----')
-//         return i;
-//     else if (data[i].date.substring(0, 4) == '----')
-//         return j;
-//     else {
-//         if (parseInt(data[i].date.substring(0, 4)) < parseInt(data[j].date.substring(0, 4)))
-//             return i;
-//         else if (parseInt(data[i].date.substring(0, 4)) > parseInt(data[j].date.substring(0, 4)))
-//             return j;
-//         else {
-//             if (parseInt(data[i].date.substring(5, 7)) < parseInt(data[j].date.substring(5, 7)))
-//                 return i;
-//             else if (parseInt(data[i].date.substring(5, 7)) > parseInt(data[j].date.substring(5, 7)))
-//                 return j;
-//             else {
-//                 if (parseInt(data[i].date.substring(8, 10)) < parseInt(data[j].date.substring(8, 10)))
-//                     return i;
-//                 else if (parseInt(data[i].date.substring(8, 10)) > parseInt(data[j].date.substring(8, 10)))
-//                     return j;
-//                 else {
-//                     if (parseInt(data[i].time.substring(0, 2)) < parseInt(data[j].time.substring(0, 2)))
-//                         return i;
-//                     else if (parseInt(data[i].time.substring(0, 2)) > parseInt(data[j].time.substring(0, 2)))
-//                         return j;
-//                     else {
-//                         if (parseInt(data[i].time.substring(3, 5)) < parseInt(data[j].time.substring(3, 5)))
-//                             return i;
-//                         else if (parseInt(data[i].time.substring(3, 5)) > parseInt(data[j].time.substring(3, 5)))
-//                             return j;
-//                         else
-//                             return i;
-//                     }
-//                 }
-//             }
-//         }
-//     }
+}
+// 比较list时间先后顺序
+function compare(i, j, data) {
+    if (data == [])
+        return i;
+    if (data[j].date.substring(0, 4) == '----')
+        return i;
+    else if (data[i].date.substring(0, 4) == '----')
+        return j;
+    else {
+        if (parseInt(data[i].date.substring(0, 4)) < parseInt(data[j].date.substring(0, 4)))
+            return i;
+        else if (parseInt(data[i].date.substring(0, 4)) > parseInt(data[j].date.substring(0, 4)))
+            return j;
+        else {
+            if (parseInt(data[i].date.substring(5, 7)) < parseInt(data[j].date.substring(5, 7)))
+                return i;
+            else if (parseInt(data[i].date.substring(5, 7)) > parseInt(data[j].date.substring(5, 7)))
+                return j;
+            else {
+                if (parseInt(data[i].date.substring(8, 10)) < parseInt(data[j].date.substring(8, 10)))
+                    return i;
+                else if (parseInt(data[i].date.substring(8, 10)) > parseInt(data[j].date.substring(8, 10)))
+                    return j;
+                else {
+                    if (parseInt(data[i].time.substring(0, 2)) < parseInt(data[j].time.substring(0, 2)))
+                        return i;
+                    else if (parseInt(data[i].time.substring(0, 2)) > parseInt(data[j].time.substring(0, 2)))
+                        return j;
+                    else {
+                        if (parseInt(data[i].time.substring(3, 5)) < parseInt(data[j].time.substring(3, 5)))
+                            return i;
+                        else if (parseInt(data[i].time.substring(3, 5)) > parseInt(data[j].time.substring(3, 5)))
+                            return j;
+                        else
+                            return i;
+                    }
+                }
+            }
+        }
+    }
 
-// }
+}
 //编辑某一项todolist
 function edit(i) {
     load();
@@ -202,9 +203,6 @@ function calculateTime(i) {
     if (parseInt(data[i].time.substring(3, 5)) < currTime.minute)
         return 'border-left: 10px solid #707075;'
     return 'border-left: 10px solid #fb372c;'
-
-
-
 }
 //通过数据加载界面
 function load() {
@@ -372,6 +370,8 @@ function addListener() {
 
 window.onload = function () {
     load();
+    var data=[];
+    saveData(data);
     addListener();
 }
 
