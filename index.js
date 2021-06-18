@@ -9,9 +9,9 @@ function post() {
     } else {
         var data = loadData();
         if (datetime.value.trim() == "") {
-            var todo = { "title": title.value, "done": false, "repeat": false, "date": "----------", "time": "----", "lastchecktime":"" };
+            var todo = { "title": title.value, "done": false, "repeat": false, "date": "----------", "time": "----", "lastchecktime": "" };
         } else {
-            var todo = { "title": title.value, "done": false, "repeat": false, "date": datetime.value.substring(0, 10), "time": datetime.value.substring(11, 16), "lastchecktime": ""};
+            var todo = { "title": title.value, "done": false, "repeat": false, "date": datetime.value.substring(0, 10), "time": datetime.value.substring(11, 16), "lastchecktime": "" };
         }
         data.push(todo);
         saveData(data);
@@ -24,13 +24,16 @@ function post() {
 //加载localstorage中数据
 function loadData() {
     var collection = localStorage.getItem("todo");
-    data=JSON.parse(collection);
-    var today=getCurrTime().year.toString()+'-'+getCurrTime().month.toString()+'-'+getCurrTime().day.toString();
-    for(i=0;i<data.length;i++){
-        if(data[i].repeat==true && data[i].lastchecktime!="" && data[i].lastchecktime!=today)
-            data[i].done=false;
+    data = JSON.parse(collection);
+    console.log(data);
+    var today = getCurrTime().year.toString() + '-' + getCurrTime().month.toString() + '-' + getCurrTime().day.toString();
+    if (data != null) {
+        for (i = 0; i < data.length; i++) {
+            if (data[i].repeat == true && data[i].lastchecktime != "" && data[i].lastchecktime != today)
+                data[i].done = false;
+        }
     }
-    if (collection != null) {
+    if (data != null) {
         return data;
     } else return [];
 }
@@ -80,9 +83,9 @@ function update(i, field, value) {
     load();
     setLastCheckTime(i);
 }
-function setLastCheckTime(i){
+function setLastCheckTime(i) {
     var data = loadData();
-    data[i].lastchecktime=getCurrTime().year.toString()+'-'+getCurrTime().month.toString()+'-'+getCurrTime().day.toString();
+    data[i].lastchecktime = getCurrTime().year.toString() + '-' + getCurrTime().month.toString() + '-' + getCurrTime().day.toString();
     saveData(data);
 }
 //对list进行排序
@@ -105,7 +108,7 @@ function sort() {
 }
 //比较list时间先后顺序
 function compare(i, j, data) {
-    if(data==null)
+    if (data == [])
         return i;
     if (data[j].date.substring(0, 4) == '----')
         return i;
@@ -305,10 +308,10 @@ function allUnfinish() {
     saveData(data);
     load();
 }
-function clearFinished(){
-    var data=loadData();
-    for(i=data.length-1;i>=0;i--){
-        if(data[i].done==true && data[i].repeat==false){
+function clearFinished() {
+    var data = loadData();
+    for (i = data.length - 1; i >= 0; i--) {
+        if (data[i].done == true && data[i].repeat == false) {
             remove(i);
         }
     }
