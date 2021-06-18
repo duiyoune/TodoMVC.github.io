@@ -1,7 +1,7 @@
 
 // 获取title节点
 function post() {
-    
+
     var title = document.getElementById("title");
     var datetime = document.getElementById("datetime");
     if (title.value.trim() == "") {
@@ -9,9 +9,9 @@ function post() {
     } else {
         var data = loadData();
         if (datetime.value.trim() == "") {
-            var todo = { "title": title.value, "done": false, "repeat": false, "date": "----------", "time": "----" };
+            var todo = { "title": title.value, "done": false, "repeat": false, "date": "----------", "time": "----", "lastchecktime":"" };
         } else {
-            var todo = { "title": title.value, "done": false, "repeat": false, "date": datetime.value.substring(0, 10), "time": datetime.value.substring(11, 16) };
+            var todo = { "title": title.value, "done": false, "repeat": false, "date": datetime.value.substring(0, 10), "time": datetime.value.substring(11, 16), "lastchecktime": ""};
         }
         data.push(todo);
         saveData(data);
@@ -20,12 +20,18 @@ function post() {
         load();
     }
 }
-    
+
 //加载localstorage中数据
 function loadData() {
     var collection = localStorage.getItem("todo");
+    data=JSON.parse(collection);
+    var today=getCurrTime().year.toString()+'-'+getCurrTime().month.toString()+'-'+getCurrTime().day.toString();
+    for(i=0;i<data.length;i++){
+        if(data[i].repeat==true && data[i].lastchecktime!="" && data[i].lastchecktime!=today)
+            data[i].done=false;
+    }
     if (collection != null) {
-        return JSON.parse(collection);
+        return data;
     } else return [];
 }
 //存储数据
@@ -55,7 +61,7 @@ function saveSort() {
 //存储数据
 function saveData(data) {
     localStorage.setItem("todo", JSON.stringify(data));
-    
+
 }
 //移除list中某一项
 function remove(i) {
@@ -72,6 +78,12 @@ function update(i, field, value) {
     data.splice(i, 0, todo);
     saveData(data);
     load();
+    setLastCheckTime(i);
+}
+function setLastCheckTime(i){
+    var data = loadData();
+    data[i].lastchecktime=getCurrTime().year.toString()+'-'+getCurrTime().month.toString()+'-'+getCurrTime().day.toString();
+    saveData(data);
 }
 //对list进行排序
 function sort() {
@@ -294,17 +306,17 @@ function allUnfinish() {
 //控制左滑删除
 function addListener() {
     var obj = document.querySelectorAll("li");
-    var deviceWidth = window.innerWidth; 
-    var isDelete=false;
-    var flag=0;
+    var deviceWidth = window.innerWidth;
+    var isDelete = false;
+    var flag = 0;
 
     for (i = 0; i < obj.length; i++) {
-        
 
-        var p=i;
-        var startX,startY;
+
+        var p = i;
+        var startX, startY;
         obj[i].addEventListener('touchstart', function (ev) {
-            
+
             startX = ev.touches[0].pageX;
             startY = ev.touches[0].pageY;
         }, false);
@@ -313,14 +325,14 @@ function addListener() {
             var endX, endY;
             endX = ev.changedTouches[0].pageX;
             endY = ev.changedTouches[0].pageY;
-            if (endX - startX < -deviceWidth/3) {
-                var data=loadData();
-                var datum={"title":this.querySelector("p").firstChild.data,"date":this.querySelectorAll("div")[0].firstChild.data,"time":this.querySelectorAll("div")[1].firstChild.data};
-                for(j=0;j<data.length;j++){
-                    if(data[j].title==datum.title && data[j].date==datum.date && data[j].time==datum.time){
+            if (endX - startX < -deviceWidth / 3) {
+                var data = loadData();
+                var datum = { "title": this.querySelector("p").firstChild.data, "date": this.querySelectorAll("div")[0].firstChild.data, "time": this.querySelectorAll("div")[1].firstChild.data };
+                for (j = 0; j < data.length; j++) {
+                    if (data[j].title == datum.title && data[j].date == datum.date && data[j].time == datum.time) {
                         console.log("yes!");
-                        isDelete=true;
-                        flag=j;
+                        isDelete = true;
+                        flag = j;
                     }
 
 
@@ -331,15 +343,15 @@ function addListener() {
             if (isDelete && this != null) {
                 remove(flag);
             }
-            if(isDelete){
+            if (isDelete) {
                 if (navigator.vibrate) {
                     navigator.vibrate(1000);
                 } else if (navigator.webkitVibrate) {
                     navigator.webkitVibrate(1000);
                 }
             }
-            isDelete=false;
-            flag=0;
+            isDelete = false;
+            flag = 0;
         }, false);
     }
 }
