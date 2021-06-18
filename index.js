@@ -1,7 +1,7 @@
 
-
+// 获取title节点
 function postaction() {
-    // 获取title节点
+    
     var title = document.getElementById("title");
     var datetime = document.getElementById("datetime");
     if (title.value.trim() == "") {
@@ -21,14 +21,14 @@ function postaction() {
     }
 }
     
-
+//加载localstorage中数据
 function loadData() {
     var collection = localStorage.getItem("todo");
     if (collection != null) {
         return JSON.parse(collection);
     } else return [];
 }
-
+//存储数据
 function saveSort() {
     var todolist = document.getElementById("todolist");
     var donelist = document.getElementById("donelist");
@@ -52,12 +52,12 @@ function saveSort() {
 
     saveData(data);
 }
-
+//存储数据
 function saveData(data) {
     localStorage.setItem("todo", JSON.stringify(data));
     
 }
-
+//移除list中某一项
 function remove(i) {
     var data = loadData();
     var todo = data.splice(i, 1)[0];
@@ -73,6 +73,7 @@ function update(i, field, value) {
     saveData(data);
     load();
 }
+//对list进行排序
 function sort() {
     var data = loadData();
     if (data.length > 0) {
@@ -90,6 +91,7 @@ function sort() {
     }
 
 }
+//比较list时间先后顺序
 function compare(i, j, data) {
     if (data[j].date.substring(0, 4) == '----')
         return i;
@@ -129,7 +131,7 @@ function compare(i, j, data) {
     }
 
 }
-
+//编辑某一项todolist
 function edit(i) {
     load();
     var p = document.getElementById("p-" + i);
@@ -147,6 +149,7 @@ function edit(i) {
         }
     };
 }
+//获取当前时间
 function getCurrTime() {
     var t = new Date();
     var year = t.getFullYear();
@@ -157,6 +160,7 @@ function getCurrTime() {
     var currTime = { "year": year, "month": month + 1, "day": day, "hour": hour, "minute": minute };
     return currTime;
 }
+//计算任务紧急程度
 function calculateTime(i) {
     var data = loadData();
     var currTime = getCurrTime();
@@ -185,7 +189,7 @@ function calculateTime(i) {
 
 
 }
-
+//通过数据加载界面
 function load() {
     sort();
     var todolist = document.getElementById("todolist");
@@ -264,7 +268,7 @@ function load() {
     }
 
 }
-
+//全部完成
 function allFinish() {
     var data = loadData();
     for (i = 0; i < data.length; i++) {
@@ -273,11 +277,12 @@ function allFinish() {
     saveData(data);
     load();
 }
+//清除全部localstorage
 function clearall() {
     localStorage.clear();
     load();
 }
-
+//全部未完成
 function allUnfinish() {
     var data = loadData();
     for (i = 0; i < data.length; i++) {
@@ -286,7 +291,7 @@ function allUnfinish() {
     saveData(data);
     load();
 }
-
+//控制左滑删除
 function addListener() {
     var obj = document.querySelectorAll("li");
     var deviceWidth = window.innerWidth; 
@@ -299,7 +304,6 @@ function addListener() {
         var p=i;
         var startX,startY;
         obj[i].addEventListener('touchstart', function (ev) {
-            // ev.preventDefault();
             
             startX = ev.touches[0].pageX;
             startY = ev.touches[0].pageY;
@@ -309,12 +313,12 @@ function addListener() {
             var endX, endY;
             endX = ev.changedTouches[0].pageX;
             endY = ev.changedTouches[0].pageY;
-            // var direction = GetSlideDirection(startX, startY, endX, endY);
             if (endX - startX < -deviceWidth/3) {
                 var data=loadData();
                 var datum={"title":this.querySelector("p").firstChild.data,"date":this.querySelectorAll("div")[0].firstChild.data,"time":this.querySelectorAll("div")[1].firstChild.data};
                 for(j=0;j<data.length;j++){
                     if(data[j].title==datum.title && data[j].date==datum.date && data[j].time==datum.time){
+                        console.log("yes!");
                         isDelete=true;
                         flag=j;
                     }
@@ -324,15 +328,18 @@ function addListener() {
             }
         }, false);
         obj[i].addEventListener('touchend', function (event) {
-            /* 在DOM中和Model中删除该todo */
             if (isDelete && this != null) {
                 remove(flag);
+            }
+            if(isDelete){
                 if (navigator.vibrate) {
                     navigator.vibrate(1000);
                 } else if (navigator.webkitVibrate) {
                     navigator.webkitVibrate(1000);
                 }
             }
+            isDelete=false;
+            flag=0;
         }, false);
     }
 }
@@ -345,5 +352,3 @@ window.onload = function () {
 
 
 
-
-  // window.addEventListener("storage", load, false);

@@ -2,10 +2,7 @@
 <html>
 
 <head>
-    <!-- http-equiv指定文档的内容类型和编码类型 -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <!-- name属性 视图和描述 name+content -->
-    <!-- <meta name="viewport" content="width=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
     <meta name="viewport" content="width=600,viewport-fit=cover initial-scale=0.6, maximum-scale=1.0, user-scalable=no">
     <title>ToDoMVC</title>
     <link rel="stylesheet" href="./index.css">
@@ -16,9 +13,7 @@
     <div class="header">
         <div class="box">
             <form action="javascript:postaction()" id="form">
-                <!-- for将label标签绑定到input -->
                 <label for="title">ToDoList</label>
-                <!-- required规定提交表单之前有必填字段  autocomplete:自动补齐-->
                 <input type="text" id="title" name="title" placeholder="添加ToDo" required="required"
                     autocomplete="off" />
                 <input type="datetime-local" id="datetime" value=“2021-07-01T12：00” />
@@ -49,9 +44,7 @@
 
 
 
-    <!-- 外接式js -->
     <script type="text/javascript" src="./index.js"></script>
-    <!-- <script type="text/javascript" src="./jquery-3.6.0.min.js"></script> -->
 
 </body>
 

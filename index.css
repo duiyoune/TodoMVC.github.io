@@ -160,14 +160,17 @@ li a {
   max-height: 80%;
 }
 .submit{
+  width:10%;
+  margin-left: 15px;
   margin-top: 12px;
    display: inline-block;
-   border-radius: 20px;
-   background: #E6E6FA;
-   line-height: 22px;
-   text-align: center;
-   color: #666;
-   font-size: 14px;   
+    border: 1px solid rgba(3, 0, 0, 0.5);
+    font-size: 0.6rem;
+    line-height: 0.6rem;
+    border-radius: 5px;
+    outline: none;
+    padding: 7px;
+    transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);  
 }
 .delete {
   position: absolute;
