@@ -105,6 +105,8 @@ function sort() {
 }
 //比较list时间先后顺序
 function compare(i, j, data) {
+    if(data==null)
+        return i;
     if (data[j].date.substring(0, 4) == '----')
         return i;
     else if (data[i].date.substring(0, 4) == '----')
