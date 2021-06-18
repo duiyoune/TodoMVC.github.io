@@ -3,12 +3,6 @@ h2 {
 	color: #fff;
 } */
 
-body {
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-  background: #eee;
-}
 
 .header {
   height: 50px;
@@ -45,17 +39,7 @@ label {
     0 1px 6px rgba(0, 0, 0, 0.45) inset;
   border: none;
 }
-.header button {
-  float: left;
-  margin-left: 5%;
-  width: 10%;
-  height: 24px;
-  margin-top: 12px;
-  border-radius: 5px;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.24),
-    0 1px 6px rgba(0, 0, 0, 0.45) inset;
-  border: none;
-}
+
 input:focus {
   outline-width: 0;
 }
@@ -175,6 +159,16 @@ li a {
   max-width: 80%;
   max-height: 80%;
 }
+.submit{
+  margin-top: 12px;
+   display: inline-block;
+   border-radius: 20px;
+   background: #E6E6FA;
+   line-height: 22px;
+   text-align: center;
+   color: #666;
+   font-size: 14px;   
+}
 .delete {
   position: absolute;
   top: 2px;
@@ -209,23 +203,7 @@ li a {
   width: 20%;
 }
 
-.batch {
-  width: 20%;
-  background-color: transparent;
-  color: white;
-  border: 1px solid white;
-  font-size: 0.6rem;
-  line-height: 0.6rem;
-  border-radius: 5px;
-  outline: none;
-  padding: 7px;
-  transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
 
-.batch {
-  color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
 
 .content button:active {
   background-color: rgba(255, 255, 255, 0.3);
@@ -235,5 +213,51 @@ body {
 }
 
 
+@media (prefers-color-scheme: dark) {
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    background: #eee;
+  }
+  .batch {
+    width: 20%;
+    background-color: transparent;
+    /* color: rgba(255, 255, 255, 0.8); */
+    border: 1px solid rgba(3, 0, 0, 0.5);
+    font-size: 0.6rem;
+    line-height: 0.6rem;
+    border-radius: 5px;
+    outline: none;
+    padding: 7px;
+    transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+}
+
 @media (prefers-color-scheme: light) {
+  h2{
+    color:white;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    background: #111;
+  }
+  .batch {
+    width: 20%;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    font-size: 0.6rem;
+    line-height: 0.6rem;
+    border-radius: 5px;
+    outline: none;
+    padding: 7px;
+    transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  
 }

@@ -1,7 +1,4 @@
-function clear() {
-    localStorage.clear();
-    load();
-}
+
 
 function postaction() {
     // 获取title节点
@@ -276,6 +273,10 @@ function allFinish() {
     saveData(data);
     load();
 }
+function clearall() {
+    localStorage.clear();
+    load();
+}
 
 function allUnfinish() {
     var data = loadData();
@@ -314,8 +315,6 @@ function addListener() {
                 var datum={"title":this.querySelector("p").firstChild.data,"date":this.querySelectorAll("div")[0].firstChild.data,"time":this.querySelectorAll("div")[1].firstChild.data};
                 for(j=0;j<data.length;j++){
                     if(data[j].title==datum.title && data[j].date==datum.date && data[j].time==datum.time){
-                        console.log(data[j]);
-                        console.log(datum);
                         isDelete=true;
                         flag=j;
                     }
@@ -328,6 +327,11 @@ function addListener() {
             /* 在DOM中和Model中删除该todo */
             if (isDelete && this != null) {
                 remove(flag);
+                if (navigator.vibrate) {
+                    navigator.vibrate(1000);
+                } else if (navigator.webkitVibrate) {
+                    navigator.webkitVibrate(1000);
+                }
             }
         }, false);
     }

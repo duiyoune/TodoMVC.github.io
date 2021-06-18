@@ -21,15 +21,19 @@
                 <!-- required规定提交表单之前有必填字段  autocomplete:自动补齐-->
                 <input type="text" id="title" name="title" placeholder="添加ToDo" required="required"
                     autocomplete="off" />
-                <input type="datetime-local" id="datetime" value =“2021-07-01T12：00”/>
+                <input type="datetime-local" id="datetime" value=“2021-07-01T12：00” />
                 <button class="submit" id="submit">Submit</button>
             </form>
         </div>
     </div>
     <!-- 主体：在这进行任务和已完成 -->
     <div class="content">
-        <h2 class="running">正在进行 <button class="batch" onclick="allFinish()">全部完成</button> <button class="batch"
-                onclick="allUnfinish()">全部未完成</button> <span id="todocount"></span></h2>
+        <h2 class="running">正在进行
+            <button class="batch" onclick="allFinish()">全部完成</button>
+            <button class="batch" onclick="allUnfinish()">全部未完成</button>
+            <button class="batch" onclick="clearall()">删除全部</button> 
+            <span id="todocount"></span>
+        </h2>
 
         <ol id="todolist" class="demo-box">
         </ol>
@@ -43,11 +47,8 @@
         </ul>
     </div>
 
-    <!-- 脚部：印记和全清除按钮 -->
-    <div class="footer">
-         <a href="javascript:clear();">clear</a>
-    </div>
-    
+
+
     <!-- 外接式js -->
     <script type="text/javascript" src="./index.js"></script>
     <!-- <script type="text/javascript" src="./jquery-3.6.0.min.js"></script> -->
