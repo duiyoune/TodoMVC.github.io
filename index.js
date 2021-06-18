@@ -1,6 +1,6 @@
 
 // 获取title节点
-function postaction() {
+function post() {
     
     var title = document.getElementById("title");
     var datetime = document.getElementById("datetime");
