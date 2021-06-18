@@ -305,6 +305,15 @@ function allUnfinish() {
     saveData(data);
     load();
 }
+function clearFinished(){
+    var data=loadData();
+    for(i=data.length-1;i>=0;i--){
+        if(data[i].done==true && data[i].repeat==false){
+            remove(i);
+        }
+    }
+    load();
+}
 //控制左滑删除
 function addListener() {
     var obj = document.querySelectorAll("li");
@@ -332,7 +341,6 @@ function addListener() {
                 var datum = { "title": this.querySelector("p").firstChild.data, "date": this.querySelectorAll("div")[0].firstChild.data, "time": this.querySelectorAll("div")[1].firstChild.data };
                 for (j = 0; j < data.length; j++) {
                     if (data[j].title == datum.title && data[j].date == datum.date && data[j].time == datum.time) {
-                        console.log("yes!");
                         isDelete = true;
                         flag = j;
                     }
