@@ -369,9 +369,9 @@ function addListener() {
 
 
 window.onload = function () {
-    load();
     var data=[];
     saveData(data);
+    load();
     addListener();
 }
 
